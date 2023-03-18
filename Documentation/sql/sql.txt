@@ -1,0 +1,62 @@
+create table Patient (
+  name text not null,
+  age bigint not null,
+  phone bigint,
+  email text not null,
+  gender text,
+  "password" text not null,
+  p_id uuid default uuid_generate_v4()
+);
+
+create table Doctors (
+  id bigint not null primary key,
+  name text not null,
+  age bigint not null,
+  gender text not null,
+  specialization text,
+  email text not null,
+  startingTime time,
+  salary bigint,
+  "password" text not null,
+  endingTime time not null
+);
+
+create table pharmacist (
+  id bigint not null primary key,
+  name text,
+  "password" text
+);
+
+create table tokens (
+  id bigint not null primary key,
+  created_at timestamp default now(),
+  medicines ARRAY not null,
+  quantity ARRAY
+);
+
+create table medicines (
+  id bigint not null primary key,
+  name text not null primary key,
+  quantity bigint not null
+);
+
+create table appointments (
+  id bigint not null primary key,
+  created_at timestamp default now(),
+  patient_id uuid references Patient (p_id),
+  doctor_id bigint references Doctors (id),
+  start_time text,
+  end_time text,
+  symptoms text not null,
+  doctor_name text not null,
+  appoint_date text not null,
+  patient_name text not null
+);
+
+create table Admin (
+  id bigint not null primary key,
+  email text,
+  name text,
+  "password" text
+);
+
